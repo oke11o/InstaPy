@@ -8,6 +8,7 @@ __pycache__/
 
 quickstart.py
 docker_quickstart.py
+config.py
 
 # C extensions
 *.so

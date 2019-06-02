@@ -1,3 +1,4 @@
+from config import users
 from instapy import InstaPy
 from instapy import smart_run
 from instapy import click_element
@@ -11,10 +12,24 @@ import random
 
 def watch_the_story(browser, logger):
 
+    # TODO: See (def like_image(browser, username, blacklist, logger, logfolder))
+    # TODO:
+    #  Открываем тэг
+    #  Кликаем по аватарке тэга и попадаем на экран сторис
+    #  Спим 1 сек и кликаем дальше вперед
     user_link = "https://www.instagram.com/stories/kirill.toros/"
     # check URL of the webpage, if it already is user's profile page,
     # then do not navigate to it again
     web_address_navigator(browser, user_link)
+
+
+
+    like_xpath = "//section/span/button/span[@aria-label='Like']"
+    unlike_xpath = "//section/span/button/span[@aria-label='Unlike']"
+
+    # find first for like element
+    like_elem = browser.find_elements_by_xpath(like_xpath)
+
 
     # xpaths
     prev_xpath = "//button/div[@class='coreSpriteRightChevron']"
@@ -63,8 +78,8 @@ def watch_the_story(browser, logger):
     except:
         logger.error('Story: something went wrong')
 
-insta_username = ''
-insta_password = ''
+insta_username = users['oke11o']['login']
+insta_password = users['oke11o']['pass']
 
 # get an InstaPy session!
 session = InstaPy(username=insta_username,
@@ -76,39 +91,39 @@ with smart_run(session):
     # general settings
     # session.set_dont_include(["friend1", "friend2", "friend3"])
 
-    session.set_relationship_bounds(enabled=True,
-                                    potency_ratio=-1.21,
-                                    delimit_by_numbers=True,
-                                    max_followers=4590,
-                                    max_following=5555,
-                                    min_followers=45,
-                                    min_following=77)
+    # session.set_relationship_bounds(enabled=True,
+    #                                 potency_ratio=-1.0,
+    #                                 delimit_by_numbers=True,
+    #                                 max_followers=4590,
+    #                                 max_following=5555,
+    #                                 min_followers=1,
+    #                                 min_following=1)
 
-    session.set_do_comment(True, percentage=10)
-    session.set_comments(['amazing!', 'So much fun!!', 'Nicey!', 'Cool!!', 'Awesome!'])
+    # session.set_do_comment(True, percentage=10)
+    # session.set_comments(['amazing!', 'So much fun!!', 'Nicey!', 'Cool!!', 'Awesome!'])
 
 
-    watch_the_story(session.browser, session.logger)
+    # watch_the_story(session.browser, session.logger)
     # activity
-    # session.like_by_tags([
-    #     'sport',
-    #     # 'russia',
-    #     # 'programming',
-    #     # 'developer',
-    #     # 'travel',
-    #     # 'trip',
-    #     # 'it',
-    #     # 'symfony',
-    #     # 'travel',
-    #     # 'trip',
-    #     # 'relax',
-    #     # 'rest',
-    #     # 'happy',
-    #     # 'счастье',
-    #     # 'москва',
-    #     # 'программирование',
-    #     # 'отдых'
-    # ], amount=2)
+    session.like_by_tags([
+        'coding',
+        # 'russia',
+        # 'programming',
+        # 'developer',
+        # 'travel',
+        # 'trip',
+        # 'it',
+        # 'symfony',
+        # 'travel',
+        # 'trip',
+        # 'relax',
+        # 'rest',
+        # 'happy',
+        # 'счастье',
+        # 'москва',
+        # 'программирование',
+        # 'отдых'
+    ], amount=2)
     print("DONE")
 
 
